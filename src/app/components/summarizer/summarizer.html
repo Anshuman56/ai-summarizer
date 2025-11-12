@@ -1,0 +1,116 @@
+<div class="container py-5" [class.dark-mode]="isDarkMode">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold" [class.text-light]="isDarkMode" [class.text-primary]="!isDarkMode">
+      ✨ AI Text Summarizer
+    </h2>
+    <button class="btn btn-outline-secondary rounded-pill" (click)="toggleTheme()">
+      <span *ngIf="!isDarkMode">🌙 Dark Mode</span>
+      <span *ngIf="isDarkMode">☀️ Light Mode</span>
+    </button>
+  </div>
+
+  <div class="card shadow-lg border-0 rounded-4 p-4" [class.bg-dark]="isDarkMode" [class.text-light]="isDarkMode">
+    <p class="text-muted" [class.text-light-emphasis]="isDarkMode">
+      Paste any paragraph below and let AI summarize it for you
+    </p>
+
+    <div class="mb-3">
+      <label for="inputText" class="form-label fw-semibold" [class.text-light]="isDarkMode">Enter your text:</label>
+      <textarea
+        id="inputText"
+        [(ngModel)]="inputText"
+        rows="6"
+        class="form-control rounded-3"
+        placeholder="Type or paste your paragraph here..."
+        [ngClass]="{'bg-dark text-light': isDarkMode}"
+      ></textarea>
+    </div>
+
+    <div class="d-grid">
+      <button
+        class="btn btn-primary btn-lg rounded-3 fw-semibold"
+        (click)="summarize()"
+        [disabled]="loading"
+      >
+        <span *ngIf="!loading">🪄 Summarize</span>
+        <span *ngIf="loading">
+          <span class="spinner-border spinner-border-sm"></span> Summarizing...
+        </span>
+      </button>
+    </div>
+
+     <div class="overlay" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Summarizing...</p>
+  </div>
+
+    <div *ngIf="error" class="alert alert-danger mt-4 text-center">
+      {{ error }}
+    </div>
+
+   <div *ngIf="summary && !error" class="alert alert-success mt-4 rounded-4">
+  <h5 class="fw-bold text-success">Summary Result:</h5>
+   <button class="btn btn-sm btn-outline-secondary" (click)="copyToClipboard(summary)">
+        📋 Copy
+      </button>
+  <p class="mb-0" [class.text-light]="isDarkMode">{{ summary }}</p>
+
+  <!-- 🌐 Translate button -->
+  <div class="mt-3 text-end">
+    <button
+      class="btn btn-outline-info btn-sm rounded-pill"
+      (click)="translateLatestSummary()"
+      [disabled]="translating"
+    >
+      <span *ngIf="!translating">🌐 Translate to Odia</span>
+      <span *ngIf="translating">
+        <span class="spinner-border spinner-border-sm"></span> Translating...
+      </span>
+    </button>
+  </div>
+
+  <!-- ✅ Show translation result inline -->
+  <div *ngIf="latestTranslation" class="mt-3 alert alert-info p-3 rounded-3">
+    <h6 class="fw-bold">🔤 Odia Translation:
+       <button class="btn btn-sm btn-outline-secondary" (click)="copyToClipboard(latestTranslation)">
+      📋 Copy
+    </button>
+    </h6>
+    <p class="mb-0">{{ latestTranslation }}</p>
+  </div>
+</div>
+
+  </div>
+
+<!-- 💾 Summary History -->
+<div
+  *ngIf="history.length > 0"
+  class="history card mt-5 border-0 rounded-4 shadow-sm p-4"
+  [ngClass]="{
+    'bg-light text-dark': !isDarkMode,
+    'bg-dark text-light border border-secondary': isDarkMode
+  }"
+>
+  <h3 class="fw-bold mb-3" [class.text-info]="isDarkMode">🕒 Summary History</h3>
+
+  <div
+    *ngFor="let item of history; let i = index"
+    class="history-item mb-3 p-3 rounded-3"
+    [ngClass]="{
+      'bg-white border': !isDarkMode,
+      'bg-secondary bg-opacity-25 border border-secondary': isDarkMode
+    }"
+  >
+    <p class="mb-1"><strong>Original:</strong> {{ item.text }}</p>
+    <p class="mb-0"><strong>Summary:</strong> {{ item.summary }}</p>
+
+    <div class="mt-2 d-flex gap-2">
+      <button class="btn btn-sm btn-danger" (click)="deleteSummary(i)">🗑️ Delete</button>
+  
+    </div>
+
+
+  </div>
+</div>
+
+</div>
