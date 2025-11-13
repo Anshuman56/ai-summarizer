@@ -1,4 +1,5 @@
 {
-  "framework": "angular",
-  "outputDirectory": "dist/ai-summarizer/browser"
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/ai-summarizer",
+  "framework": "angular"
 }
