@@ -1,6 +1,6 @@
 {
   "builds": [
-    { "src": "angular.json", "use": "@vercel/static-build", "config": {} }
+    { "src": "angular.json", "use": "@vercel/static-build" }
   ],
   "framework": "angular",
   "outputDirectory": "dist/ai-summarizer/browser"
