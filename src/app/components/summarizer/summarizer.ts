@@ -98,7 +98,7 @@ summarize() {
     this.translating = true;
 
     this.http
-      .post<{ translated: string }>('http://localhost:3000/api/translate', {
+      .post<{ translated: string }>('https://ai-summarizer-1wum.onrender.com/api/translate', {
         text: this.summary,
         targetLang: 'or',
       })
