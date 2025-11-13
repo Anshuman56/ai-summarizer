@@ -1,5 +1,10 @@
 {
-
   "framework": "angular",
-  "outputDirectory": "dist/ai-summarizer/browser"
+  "outputDirectory": "dist/ai-summarizer",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://ai-summarizer-1wum.onrender.com/api/$1"
+    }
+  ]
 }
