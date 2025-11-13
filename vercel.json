@@ -8,16 +8,9 @@
     }
   ],
   "routes": [
-    { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
-  ],
-  "headers": [
     {
-      "source": "/(.*)\\.(js|css|html|json|ico|png|jpg|jpeg|gif|svg|webp|woff2?)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
-        { "key": "Content-Type", "value": "application/javascript" }
-      ]
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
