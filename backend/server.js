@@ -7,7 +7,11 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 const HF_API_KEY = process.env.HF_API_KEY;
 const HF_API_URL = "https://router.huggingface.co/hf-inference/models/facebook/bart-large-cnn";
