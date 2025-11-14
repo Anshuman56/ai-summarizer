@@ -25,19 +25,41 @@
         [ngClass]="{'bg-dark text-light': isDarkMode}"
       ></textarea>
     </div>
+    
+ <div *ngIf="latestInputTranslation" class="alert alert-info mt-3 p-3 rounded-3">
+  <h6 class="fw-bold">🔤 Input Translation:</h6>
+  <p>{{ latestInputTranslation }}</p>
+</div>
 
-    <div class="d-grid">
-      <button
-        class="btn btn-primary btn-lg rounded-3 fw-semibold"
-        (click)="summarize()"
-        [disabled]="loading"
-      >
-        <span *ngIf="!loading">🪄 Summarize</span>
-        <span *ngIf="loading">
-          <span class="spinner-border spinner-border-sm"></span> Summarizing...
-        </span>
-      </button>
-    </div>
+
+  <div class="d-flex gap-3">
+  <!-- Summarize button -->
+  <button
+    class="btn btn-primary flex-fill btn-lg rounded-3 fw-semibold"
+    (click)="summarize()"
+    [disabled]="loading"
+  >
+    <span *ngIf="!loading">🪄 Summarize</span>
+    <span *ngIf="loading">
+      <span class="spinner-border spinner-border-sm"></span> Summarizing...
+    </span>
+  </button>
+
+  <!-- Translate USER INPUT button -->
+  <button
+    class="btn btn-warning flex-fill btn-lg rounded-3 fw-semibold"
+    (click)="translateInputText()"
+    [disabled]="loading || translatingInput || !inputText.trim()"
+  >
+    <span *ngIf="!translatingInput">🌐 Translate Input to Odia</span>
+    <span *ngIf="translatingInput">
+      <span class="spinner-border spinner-border-sm"></span> Translating...
+    </span>
+  </button>
+</div>
+
+
+
 
      <div class="overlay" *ngIf="loading">
     <div class="spinner"></div>

@@ -25,6 +25,9 @@ export class Summarizer {
   translating = false;
   error = '';
   isDarkMode = false;
+  latestInputTranslation = '';
+  translatingInput = false;
+
 
    // 💾 History of all summaries
   history: SummaryItem[] = [];
@@ -123,5 +126,28 @@ summarize() {
     alert('❌ Failed to copy text.');
   });
 }
+
+translateInputText() {
+  if (!this.inputText.trim()) return;
+
+  this.translatingInput = true;
+  this.latestInputTranslation = '';
+
+  this.http.post<{ translated: string }>(
+    'https://ai-summarizer-1wum.onrender.com/api/translate',
+    { text: this.inputText, targetLang: 'or' }
+  )
+  .subscribe({
+    next: (res) => {
+      this.latestInputTranslation = res.translated;
+      this.translatingInput = false;
+    },
+    error: () => {
+      alert("❌ Failed to translate input text.");
+      this.translatingInput = false;
+    }
+  });
+}
+
 
 }
